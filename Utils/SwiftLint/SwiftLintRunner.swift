@@ -29,13 +29,13 @@ class SwiftLintRunner {
             + listGitUnCommittedModifiedFiles()
             + listGitNewFiles()
         ))
-        let swiftFiles = allFiles.filter({$0.contains(".swift")})
+        let swiftFiles = allFiles.filter({$0.hasSuffix(".swift")})
         return swiftFiles
     }
 
     static func listGitCommittedModifiedFiles() -> [String] {
         let gitFetch = git(["fetch"])
-        let gitDiff = git(["diff --no-index", "origin/master...", "--name-only", "--diff-filter=d"])
+        let gitDiff = git(["diff", "origin/master...", "--name-only", "--diff-filter=d"])
         let gitPipe = Pipe()
         gitDiff.standardOutput = gitPipe
 
@@ -60,7 +60,7 @@ class SwiftLintRunner {
     }
 
     static func listGitUnCommittedModifiedFiles() -> [String] {
-        let gitDiff = git(["diff --no-index", "HEAD", "--name-only", "--diff-filter=d"])
+        let gitDiff = git(["diff", "HEAD", "--name-only", "--diff-filter=d"])
         let gitPipe = Pipe()
         gitDiff.standardOutput = gitPipe
 
@@ -114,7 +114,7 @@ class SwiftLintRunner {
 
     static func swiftLint(_ arguments: [String]) -> Process {
         let linter = Process()
-        linter.executableURL = URL(fileURLWithPath: "\(rootPath)/../Utils/SwiftLint/swiftlint")
+        linter.executableURL = URL(fileURLWithPath: "\(rootPath)/../Utils/Scripts/SwiftLint/swiftlint")
         linter.arguments = arguments
         linter.currentDirectoryURL = URL(fileURLWithPath: "\(rootPath)/..")
 

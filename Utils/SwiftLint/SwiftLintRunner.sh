@@ -18,4 +18,4 @@ fi
 unset SDKROOT
 
 # Triggers the script
-"$SRCROOT/../Utils/SwiftLint/SwiftLintRunner.swift" "$PROJECT_DIR"
+"$SRCROOT/../utils/SwiftLint/SwiftLintRunner.swift" "$PROJECT_DIR"
